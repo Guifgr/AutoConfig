@@ -1,6 +1,15 @@
 import os
-import urllib.request
-
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    
 def findCSFolder():
     letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z" ]
     for letter in letters:
@@ -20,34 +29,25 @@ def findCfgFolder(csPath):
                     path = root +"\\"+ d
                     return path
 
-def autoexecExists(findCfgFolder):
-    path = False
+def autoexecExists(csPath):
     for root, subdirs,files in os.walk(csPath+"\\"):
             for d in files:
                 if d == "autoexec.cfg":
                     path = root +"\\"+ d
                     return path
 
-try:
-    name = input("Digite o nome do player\n").upper()
-    with urllib.request.urlopen('https://guilhermefgr.com.br/tests/CS_'+name+'.txt') as f:
-        cfg = f.read().decode('ISO-8859-1')
-
+def csGo(cfg):
     csPath = findCSFolder()
     print(csPath)
 
-    findCfgFolder = findCfgFolder(csPath)
-    print(findCfgFolder)
+    cfgFolder = findCfgFolder(csPath)
+    print(cfgFolder)
 
-    autoexecPath = autoexecExists(findCfgFolder)
+    autoexecPath = autoexecExists(cfgFolder)
     if(autoexecPath == None):
-        f = open(findCfgFolder+"\\autoexec.cfg", "w")
-        print("Created file")
-        print(findCfgFolder+"\\autoexec.cfg")
-        open(findCfgFolder+"\\autoexec.cfg",'w').write(cfg)
+        open(cfgFolder+"\\autoexec.cfg",'w').write(cfg)
+        print(bcolors.OKGREEN+"Created file in:"+cfgFolder+"\\autoexec.cfg"+bcolors.ENDC)
     else:
-        print(autoexecPath)
-        open(autoexecPath,'w').write(cfg)
-
-except:
-    print("User not Found 404")
+        open(cfgFolder+"\\autoexec.cfg",'w').write(cfg)
+        print(bcolors.OKGREEN+"Recreated file in:"+cfgFolder+"\\autoexec.cfg"+bcolors.ENDC)
+        
