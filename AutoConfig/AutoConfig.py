@@ -4,19 +4,28 @@ from downloadFile import downloadGameFile
 from csGo import csGo
 from r6 import r6
 
-try:
-    clean()
-    name = input("Digite o nome do player: ").upper()
-    clean()
-    game = input("Digite de qual jogo quer as configurações como exemplos abaixo\nPara Counter Strike Global Offensive digite ➡  CS \nPara Rainbow Six Siege digite ➡  R6\nDigite: ").upper()
+continuar = True
 
-    fileTxt = downloadGameFile(game, name)
+while(continuar):
+    try:
+        clean()
+        name = input("Digite o nome do player: ").upper()
+        clean()
+        game = input("Digite de qual jogo quer as configurações como exemplos abaixo\nPara Counter Strike Global Offensive digite ➡  CS \nPara Rainbow Six Siege digite ➡  R6\nDigite: ").upper()
 
-    if(game == "CS"):
-        csGo(fileTxt)
-    elif(game == "R6"):
-        r6(fileTxt)
+        fileTxt = downloadGameFile(game, name)
 
-except:
-    clean()
-    print("Nome do jogador pode estar inválido ou ele não tem configurações nesse jogo 😢")
+        if(game == "CS"):
+            csGo(fileTxt)
+        elif(game == "R6"):
+            r6(fileTxt)
+
+    except:
+        clean()
+        print("Nome do jogador pode estar inválido ou ele não tem configurações nesse jogo 😢")
+        
+    continuar = input("\n\nDeseja continuar?").upper()
+    if(continuar == "YES" or continuar == "Y" or continuar == "SIM" or continuar == "S"):
+        continuar = True
+    else:
+        continuar = False
